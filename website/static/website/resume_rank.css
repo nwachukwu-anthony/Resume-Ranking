@@ -5,9 +5,22 @@
 /* Create three equal columns that floats next to each other */
 .column {
   float: left;
-  width: 100%;
   padding: 10px;
   background-color: papayawhip;
+  font-size: 15px;
+}
+
+.row2{
+  padding: 20px;
+  display: inline-block;
+}
+
+#col1{
+  width: 30%;
+}
+
+#col2{
+  width: 70%;
 }
 
 /* Clear floats after the columns */
@@ -17,6 +30,6 @@
   clear: both;
 }
 
-.center {
+.center{
     text-align: center;
 }

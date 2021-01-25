@@ -20,10 +20,15 @@
         <input type="search" id="direct" name="direct">
 
         <label for="id">Resume id:</label>
-        <input type="number" id="id" name="id">
+        <input type="number" id="id" name="id" min="1" value="1" max="{{ no_of_resumes }}">
 
         <label for="upload">Resume path:</label>
-        <input type="file" id="upload" name="upload"/>
+        <input type="file" id="upload" name="upload">
+
+        <br>
+
+        <label for="no_of_outputs">Number of outputs:</label>
+        <input type="number" id="no_of_outputs" name="no_of_outputs" value="1" min="1" max="{{ no_of_resumes }}">
 
         <br>
 
@@ -46,16 +51,32 @@
     {% else %}
         <div class="row">
 
-          <div class="column">
-              {{models|last}}
-                <ul>
-                    {% for r in result %}
-                    <li>
-                        <p style="font-size:13px">{{r}}</p>
-                    </li>
-                    {% endfor %}
-                </ul>
+          <div class="column" id="col1">
+
+            <ul>
+                {% for r in result %}
+                    {% with k=r|first resume_data=r|last %}
+                <li>
+                    <a href="#{{k}}">{{k}}</a>
+                </li>
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+
           </div>
+          <div class="column" id="col2">
+              {% for r in result %}
+                    {% with k=r|first resume_data=r|last %}
+                        <div class="row2" id="{{k}}">
+                            <h4>{{k}}</h4>
+                            <p>{{ resume_data }}</p>
+                            <a href="#">Move up</a>
+                        </div>
+                        <br><br>
+              {% endwith %}
+                {% endfor %}
+          </div>
+
     </div>
 
     {% endif %}

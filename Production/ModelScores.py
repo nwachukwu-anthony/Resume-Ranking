@@ -18,7 +18,7 @@ class ModelScores:
 
     def __init__(self):
 
-        with open('./../Data/Workin_Data/' + 'data_dict.pkl', 'rb') as f:
+        with open('Data/Workin_Data/' + 'data_dict.pkl', 'rb') as f:
             self.pickle_data = pickle.load(f)
 
         self.utils = Utils()
@@ -59,6 +59,9 @@ class ModelScores:
 
     def single_query_scores(self, query, model):
 
+        if query.strip() == "":
+            return None
+
         processed_resume = self.pickle_data['processed_resume']
         data_index_employee_id, data_processed = self.utils.resume_index_id_data(processed_resume)
 
@@ -80,9 +83,9 @@ class ModelScores:
 
         return [[data_index_employee_id[indices[i]], id_sorted[i]] for i in range(len(indices))]
 
-    def single_resume_scores(self, path, file_name, model):
+    def single_resume_scores(self, file_name, model):
 
-        recruitment_preprocess = RecruitmentPreprocess(path)
+        recruitment_preprocess = RecruitmentPreprocess('Data/Resumes/')
         query = recruitment_preprocess.extract_text_from_resume(file_name)
 
-        return self.single_query_scores(file_name, model)
+        return self.single_query_scores(query, model)

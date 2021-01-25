@@ -18,15 +18,17 @@ class RecruitmentPreprocess:
 
         self.resume_path = resume_path
 
-        if save_to_path != None:
+        if save_to_path is not None:
             self.save_to_path = save_to_path
-            self.resume_count, self.resume_id_index, self.resume_id_data, self.resume_data = self.__merge_resume_to_dataframe()
+            self.resume_id_data, self.resume_count, self.resume_id_index, self.resume_id_data, self.resume_data = self.__merge_resume_to_dataframe()
 
     def extract_text_from_resume(self, file_name):
         if file_name.split('.')[-1] == "pdf":
             text = parser.from_file(self.resume_path + file_name)['content']
-        else:
+        elif file_name.split('.')[-1] in ["doc", "docx", "txt"]:
             text = textract.process(self.resume_path + file_name).decode()
+        else:
+            text = ""
         return text
 
     def __merge_resume_to_dataframe(self):
@@ -45,11 +47,16 @@ class RecruitmentPreprocess:
                 all_collection.append(collection)
                 index += 1
 
-        return index-1, resume_id_index, resume_id_data, pd.DataFrame(all_collection, columns=['employee_id', 'data'])
+        return resume_id_data, index-1, resume_id_index, resume_id_data, pd.DataFrame(all_collection, columns=['employee_id', 'data'])
 
     def save_resume_data_to_csv(self):
 
         self.resume_data.to_csv(self.save_to_path + 'resume_data.csv', index=False)
+
+    def add_resume_data_to_pickle(self):
+
+        utils = Utils()
+        utils.add_data_to_pickle('resume_id_data', self.resume_id_data, self.save_to_path)
 
     def add_resume_count_to_pickle(self):
 
