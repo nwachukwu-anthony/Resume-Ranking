@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Welcome{% endblock %}
+
+{% block css %}
+{% load static %}
+<head><link rel="stylesheet" href="{% static 'website/resume_rank.css' %}"></head>
+{% endblock %}
+
+{% block content %}
+    <div class="center">
+    <h1>Ranking Resumes</h1>
+    <p>Now let's proceed to rank the resumes
+    <em>in order of decreasing similarity</em>
+    </p>
+
+    <form method="get">
+        {% csrf_token %}
+
+        <label for="direct">Search:</label>
+        <input type="search" id="direct" name="direct">
+
+        <label for="id">Resume id:</label>
+        <input type="number" id="id" name="id">
+
+        <label for="upload">Resume path:</label>
+        <input type="file" id="upload" name="upload"/>
+
+        <br>
+
+        <input type="radio" id="direct_search" name="query_option" value="direct_search" checked="checked">
+        <label for="direct_search">Query</label>
+
+        <input type="radio" id="resume_id" name="query_option" value="resume_id">
+        <label for="resume_id">Resume Id</label>
+
+        <input type="radio" id="file_upload" name="query_option" value="file_upload">
+        <label for="file_upload">File Upload</label>
+
+        <button type="submit">Enter</button>
+
+    </form>
+
+    </div>
+    {% if not result %}
+        <p>Please enter a valid query</p>
+    {% else %}
+        <div class="row">
+
+          <div class="column">
+              {{models|last}}
+                <ul>
+                    {% for r in result %}
+                    <li>
+                        <p style="font-size:13px">{{r}}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+          </div>
+    </div>
+
+    {% endif %}
+
+{% endblock %}
