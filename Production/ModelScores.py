@@ -42,9 +42,7 @@ class ModelScores:
 
         raw_query = user_accessible_resume[resume_id]
 
-        if model == 'BM25':
-            chosen_model = BM25(data_processed_copy)
-        elif model == 'BM25Okapi':
+        if model == 'BM25Okapi':
             chosen_model = BM25Okapi(data_processed_copy)
         elif model == 'BM25L':
             chosen_model = BM25L(data_processed_copy)

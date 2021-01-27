@@ -34,13 +34,22 @@
 
         <br>
 
-        <input type="radio" id="direct_search" name="query_option" value="direct_search" checked="checked">
         <label for="direct_search">Query</label>
+        <input type="radio" id="direct_search" name="query_option" value="direct_search" checked="checked">
 
-        <input type="radio" id="resume_id" name="query_option" value="resume_id">
         <label for="resume_id">Resume Id</label>
+        <input type="radio" id="resume_id" name="query_option" value="resume_id">
 
-        <button type="submit">Enter</button>
+        <label for="model">Models</label>
+        <select id="model" name="model">
+            <option value="BM25Plus">BM25Plus</option>
+            <option value="BM25L">BM25L</option>
+            <option value="BM25Okapi">BM25Okapi</option>
+            <option value="BM25Adpt">BM25Adpt</option>
+            <option value="BM25T">BM25T</option>
+        </select>
+<br>
+        <button type="submit">Submit</button>
 
     </form>
 
