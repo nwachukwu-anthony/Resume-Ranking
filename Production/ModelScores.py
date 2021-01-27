@@ -1,7 +1,6 @@
 import pickle
 from operator import itemgetter
 
-from Production.RecruitmentPreprocess import RecruitmentPreprocess
 from Production.Utils import Utils
 from Production.models.BM25 import BM25
 from Production.models.BM25Adpt import BM25Adpt
@@ -12,11 +11,11 @@ from Production.models.BM25T import BM25T
 
 
 class ModelScores:
-    """
-    Returns Model Scores for single query, single resume and for all resumes
-    """
 
     def __init__(self):
+        """
+        Returns Model Scores for single query, single resume and for all resumes
+        """
 
         with open('Data/Workin_Data/' + 'data_dict.pkl', 'rb') as f:
             self.pickle_data = pickle.load(f)
@@ -24,6 +23,12 @@ class ModelScores:
         self.utils = Utils()
 
     def get_resume_id_ranking_scores(self, resume_id, model):
+        """
+        Returns Model Scores for single resume
+        :param resume_id: int
+        :param model: str
+        :return: list[list]
+        """
 
         user_accessible_resume = self.pickle_data['user_accessible_resume']
         processed_resume = self.pickle_data['processed_resume']
@@ -58,6 +63,12 @@ class ModelScores:
         return [[data_index_resume_id[indices[i]], id_sorted[i]] for i in range(0, len(indices))][1:]
 
     def single_query_scores(self, query, model):
+        """
+        Returns Model Scores for single query
+        :param query: str
+        :param model: str
+        :return: list[list]
+        """
 
         if query.strip() == "":
             return None
@@ -82,10 +93,3 @@ class ModelScores:
         indices, id_sorted = zip(*sorted(enumerate(scores), reverse=True, key=itemgetter(1)))
 
         return [[data_index_employee_id[indices[i]], id_sorted[i]] for i in range(len(indices))]
-
-    def single_resume_scores(self, file_name, model):
-
-        recruitment_preprocess = RecruitmentPreprocess('Data/Resumes/')
-        query = recruitment_preprocess.extract_text_from_resume(file_name)
-
-        return self.single_query_scores(query, model)

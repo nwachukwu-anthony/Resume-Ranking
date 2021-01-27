@@ -16,7 +16,9 @@ class Utils:
 
     def shuffle_data(self, data_pd):
         """
-        Data shuffling
+        Shuffles data
+        :param data_pd: pandas dataframe
+        :return: dataframe
         """
 
         data_columns = data_pd.columns
@@ -27,7 +29,9 @@ class Utils:
 
     def string_to_words(self, query):
         """
-        from string of words to list of processed words
+        Processes words by cleaning and removing unwanted items
+        :param query: str
+        :return: list[list]
         """
 
         nltk.download("stopwords", quiet=True)
@@ -46,8 +50,10 @@ class Utils:
     def clean_data(self, data, cache_dir, cache_file="cleaned_data.pkl"):
         """
         Convert each data row to words; read from cache if available.
-        input: dataframe with columns key->col1, value->col2
-        output: list of lists, e.g [[employee1_id,body1_word_list],[employee2_id,body2_word_list],...]
+        :param data: pandas dataframe (dataframe with columns key->col1, value->col2)
+        :param cache_dir: dir
+        :param cache_file: str
+        :return: list[list]  e.g [[employee1_id,body1_word_list],[employee2_id,body2_word_list],...]
         """
 
         data_keys, data_body = data[data.columns[0]].values, data[data.columns[1]].values
@@ -82,7 +88,12 @@ class Utils:
 
     def add_data_to_pickle(self, data_file, data=None, path='./'):
 
-        data_path = path + data_file
+        """
+        :param data_file: (str) name of file containing the data to be saved to pickle
+        :param data: (object) data to be saved to pickle (this is optional, it is to be used when raw data instead of one saved in a file is to be used)
+        :param path: (str) location path of the data
+        :return: None
+        """
 
         data_file_name = data_file.split('.')[0]
         pickle_file_name = path + 'data_dict.pkl'
@@ -104,9 +115,19 @@ class Utils:
             pickle.dump(data_collections, f)
 
     def swap_key_value(self, index_id):
+        """
+        This function swaps the document index and the id
+        :param index_id: int
+        :return: dict
+        """
         return {emm_id: index for index, emm_id in index_id.items()}
 
     def resume_index_id_data(self, data_processed_with_id):
+        """
+        Extracts index and id from the documents
+        :param data_processed_with_id: list[list]
+        :return: dict, list
+        """
         count, index_id, data = 0, {}, []
         for item in data_processed_with_id:
             index_id[count] = item[0]

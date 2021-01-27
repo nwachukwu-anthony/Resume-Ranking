@@ -2,7 +2,6 @@
   box-sizing: border-box;
 }
 
-/* Create three equal columns that floats next to each other */
 .column {
   float: left;
   padding: 10px;
@@ -12,7 +11,6 @@
 
 .row2{
   padding: 20px;
-  display: inline-block;
 }
 
 #col1{
@@ -23,7 +21,6 @@
   width: 70%;
 }
 
-/* Clear floats after the columns */
 .row:after {
   content: "";
   display: table;
@@ -32,4 +29,9 @@
 
 .center{
     text-align: center;
+}
+
+#form{
+  padding-bottom: 30px;
+  padding-top: 30px;
 }

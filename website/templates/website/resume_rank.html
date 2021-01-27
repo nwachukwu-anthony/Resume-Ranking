@@ -8,12 +8,13 @@
 
 {% block content %}
     <div class="center">
-    <h1>Ranking Resumes</h1>
-    <p>Now let's proceed to rank the resumes
-    <em>in order of decreasing similarity</em>
-    </p>
+        <h1>Ranking Resumes</h1>
+        <p>Now let's proceed to rank the resumes
+        <em>in order of decreasing similarity</em>
+        </p>
+    </div>
 
-    <form method="get">
+    <form method="get" class="center" id="form">
         {% csrf_token %}
 
         <label for="direct">Search:</label>
@@ -22,13 +23,14 @@
         <label for="id">Resume id:</label>
         <input type="number" id="id" name="id" min="1" value="1" max="{{ no_of_resumes }}">
 
-        <label for="upload">Resume path:</label>
-        <input type="file" id="upload" name="upload">
-
+        <br>
         <br>
 
         <label for="no_of_outputs">Number of outputs:</label>
         <input type="number" id="no_of_outputs" name="no_of_outputs" value="1" min="1" max="{{ no_of_resumes }}">
+
+        <label for="resume_words_counts" style="margin-left: 40%;">Resume words count:</label>
+        <input type="number" id="resume_words_counts" name="resume_words_counts" value="100" min="0">
 
         <br>
 
@@ -38,14 +40,11 @@
         <input type="radio" id="resume_id" name="query_option" value="resume_id">
         <label for="resume_id">Resume Id</label>
 
-        <input type="radio" id="file_upload" name="query_option" value="file_upload">
-        <label for="file_upload">File Upload</label>
-
         <button type="submit">Enter</button>
 
     </form>
 
-    </div>
+
     {% if not result %}
         <p>Please enter a valid query</p>
     {% else %}
